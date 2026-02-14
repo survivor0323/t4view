@@ -24,7 +24,7 @@ export function Sidebar({ onFileSelect, selectedFile }: SidebarProps) {
         const response = await fetch(`/api/files?folderId=${folderId}`);
         if (!response.ok) throw new Error('파일 목록을 가져올 수 없습니다.');
         const data = await response.json();
-        return data.files;
+        return data.files as FileNode[];
     }, []);
 
     useEffect(() => {
@@ -79,6 +79,7 @@ export function Sidebar({ onFileSelect, selectedFile }: SidebarProps) {
             const currentPath = [...path, index];
             const isFolder = node.mimeType === 'application/vnd.google-apps.folder';
             const isSelected = selectedFile?.id === node.id;
+            const isExpanded = node.isExpanded || false;
 
             return (
                 <div key={node.id} className="select-none">
@@ -96,12 +97,12 @@ export function Sidebar({ onFileSelect, selectedFile }: SidebarProps) {
                             }
                         }}
                     >
-                        <span className={`w-4 flex items-center justify-center text-[10px] transition-transform duration-300 ${node.isExpanded ? 'rotate-0' : '-rotate-90'}`}>
+                        <span className={`w-4 flex items-center justify-center text-[10px] transition-transform duration-300 ${isExpanded ? 'rotate-0' : '-rotate-90'}`}>
                             {isFolder ? <FaChevronDown className={isSelected ? 'text-accent' : 'text-slate-600'} /> : null}
                         </span>
                         <span className="text-lg flex items-center h-5">
                             {isFolder ? (
-                                node.isExpanded ? <FaFolderOpen className="text-amber-400" /> : <FaFolder className="text-amber-500" />
+                                isExpanded ? <FaFolderOpen className="text-amber-400" /> : <FaFolder className="text-amber-500" />
                             ) : (
                                 getFileIcon(node.mimeType)
                             )}
@@ -109,9 +110,9 @@ export function Sidebar({ onFileSelect, selectedFile }: SidebarProps) {
                         <span className={`flex-1 truncate text-[13px] font-medium ${isSelected ? 'font-bold' : ''}`}>
                             {node.name}
                         </span>
-                        {node.isLoading && <div className="w-3 h-3 border-2 border-accent border-t-transparent rounded-full animate-spin"></div>}
+                        {(node as any).isLoading && <div className="w-3 h-3 border-2 border-accent border-t-transparent rounded-full animate-spin"></div>}
                     </div>
-                    {isFolder && node.isExpanded && node.children && (
+                    {isFolder && isExpanded && node.children && (
                         <div className="border-l border-white/5 ml-4 mt-1">
                             {renderTree(node.children, currentPath, level + 1)}
                         </div>

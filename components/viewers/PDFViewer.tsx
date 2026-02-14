@@ -41,7 +41,7 @@ export function PDFViewer({ fileId, fileName }: PDFViewerProps) {
 
             try {
                 setLoading(true);
-                const loadingTask = pdfjs.getDocument(pdfUrl);
+                const loadingTask = (pdfjs as any).getDocument(pdfUrl);
                 const pdf = await loadingTask.promise;
                 setNumPages(pdf.numPages);
 
@@ -65,7 +65,7 @@ export function PDFViewer({ fileId, fileName }: PDFViewerProps) {
             if (!pdfjs || numPages === 0) return;
 
             try {
-                const loadingTask = pdfjs.getDocument(pdfUrl);
+                const loadingTask = (pdfjs as any).getDocument(pdfUrl);
                 const pdf = await loadingTask.promise;
 
                 for (let i = 1; i <= numPages; i++) {
