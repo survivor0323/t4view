@@ -9,15 +9,26 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@videojs/themes": "^1.0.1",
+    "googleapis": "^171.4.0",
+    "mammoth": "^1.11.0",
     "next": "16.1.6",
+    "next-auth": "^4.24.13",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^5.4.624",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "react-icons": "^5.5.0",
+    "video.js": "^8.23.7"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
+    "@types/pdfjs-dist": "^2.10.377",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/video.js": "^7.3.58",
+    "canvas": "^3.2.1",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "tailwindcss": "^4",
